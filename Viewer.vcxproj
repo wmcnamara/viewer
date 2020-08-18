@@ -133,6 +133,7 @@
     <ClInclude Include="lib\imgui\imstb_rectpack.h" />
     <ClInclude Include="lib\imgui\imstb_textedit.h" />
     <ClInclude Include="lib\imgui\imstb_truetype.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\Calculator.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\ConfigReader.h" />
@@ -152,9 +153,13 @@
     <None Include="build\shaders\Standard.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\westmaclogo.ico" />
     <Image Include="build\assets\crate.jpg" />
     <Image Include="build\assets\error.jpg" />
     <Image Include="build\assets\wall.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Viewer.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

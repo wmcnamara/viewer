@@ -143,6 +143,9 @@
     <ClInclude Include="lib\imgui\imstb_truetype.h">
       <Filter>IMGUI</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="build\shaders\Standard.frag">
@@ -162,5 +165,13 @@
     <Image Include="build\assets\wall.jpg">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="assets\westmaclogo.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Viewer.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

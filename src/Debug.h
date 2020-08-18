@@ -7,7 +7,7 @@ namespace Debug
 	static void Log(const std::stringstream& msg)
 	{
 		std::ofstream log;
-		log.open("output.log");
+		log.open("output.log", std::ios_base::app);
 
 		if (log.is_open())
 		{
@@ -19,11 +19,23 @@ namespace Debug
 	static void Log(const char* msg)
 	{
 		std::ofstream log;
-		log.open("output.log");
+		log.open("output.log", std::ios_base::app);
 
 		if (log.is_open())
 		{
 			log << msg << std::endl;
+		}
+		log.close();
+	}
+
+	static void ClearOutputLogs() 
+	{
+		std::ofstream log;
+		log.open("output.log");
+
+		if (log.is_open())
+		{
+			log << " " << std::endl;
 		}
 		log.close();
 	}

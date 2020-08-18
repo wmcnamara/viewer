@@ -79,7 +79,7 @@ void GuiWindow::BeginDraw()
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
 																									  
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			std::cout << "ERROR::FRAMEBUFFER::NOT_COMPLETE" << std::endl;
+			Debug::Log("ERROR::FRAMEBUFFER::NOT_COMPLETE");
 	}
 	else 
 	{

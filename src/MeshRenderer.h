@@ -12,9 +12,9 @@ public:
 		m_mesh(mesh), 
 		m_texture(texture),
 		m_shader(shader),
-		m_camera(camera) 
-	{
-	}
+		m_camera(camera),
+		m_indexed(mesh->indexed())
+	{}
 
 	void Render();
 	bool active = true;

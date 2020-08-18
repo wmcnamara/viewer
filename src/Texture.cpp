@@ -25,7 +25,6 @@ Texture::Texture(const char* path, bool genMipMaps)
 		//Debug logging
 		std::stringstream output;
 		output << "TEXTURE: "<< path << " successfully loaded!" << std::endl;
-		std::cout << output.rdbuf() << std::endl;
 
 		Debug::Log(output);
 	}
@@ -54,6 +53,8 @@ void Texture::Reload(const char * path)
 	// load and generate the texture
 	int width, height, nrChannels;
 
+	std::stringstream output;
+
 	unsigned char *data = stbi_load(path, &width, &height, &nrChannels, 4);
 	if (data)
 	{
@@ -61,15 +62,13 @@ void Texture::Reload(const char * path)
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		//Debug logging
-		std::stringstream output;
-		output << "TEXTURE: " << path << " successfully loaded!" << std::endl;
-		std::cout << output.rdbuf() << std::endl;
-
+		output << "TEXTURE: " << path << " successfully loaded!";
 		Debug::Log(output);
 	}
 	else
 	{
-		std::cout << "Failed to load texture from " << path << std::endl;
+		output << "Failed to load texture from " << path;
+		Debug::Log(output);
 	}
 	stbi_image_free(data);
 }

@@ -16,6 +16,12 @@
     <Filter Include="IMGUI">
       <UniqueIdentifier>{0f6aaf31-d313-412f-961f-9ea32dd6a07e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{3000f423-7795-4a36-b8e5-15d792410d90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{32e91764-dbe3-4eae-8605-a9a02e0c6f31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Calculator.cpp">
@@ -137,5 +143,24 @@
     <ClInclude Include="lib\imgui\imstb_truetype.h">
       <Filter>IMGUI</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="build\shaders\Standard.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="build\shaders\Standard.vert">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="build\assets\crate.jpg">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="build\assets\error.jpg">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="build\assets\wall.jpg">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

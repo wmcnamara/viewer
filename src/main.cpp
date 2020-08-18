@@ -92,7 +92,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 {
 	Window::Init();
 	shader = new Shader("shaders/Standard.vert", "shaders/Standard.frag");
-	texture = new Texture("crate.png", false);
+	texture = new Texture("assets/error.jpg", false);
 	cube = new Mesh(vertices, NULL, 180, 0, false);
 
 	camera = new Camera(
@@ -113,7 +113,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	while (!glfwWindowShouldClose(Window::Instance().GetWindow()))
 	{
 		Window::Instance().BeforeRender();
-
 		sceneWin.BeginDraw();
 
 		//FPS

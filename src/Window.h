@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <string>
 #include "delegate.h"
+#include "Debug.h"
 
 class Window
 {

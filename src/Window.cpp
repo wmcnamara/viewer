@@ -53,6 +53,8 @@ void Window::AfterRender()
 
 Window::Window()
 {
+	Debug::ClearOutputLogs();
+	Debug::Log(std::stringstream("Viewer Debug Started"));
 	//Glfw
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -64,7 +66,7 @@ Window::Window()
 	m_window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "WestMac Texture Viewer", NULL, NULL);
 	if (m_window == NULL)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
+		Debug::Log("Failed to create GLFW window");
 		glfwTerminate();
 		return;
 	}
@@ -73,7 +75,7 @@ Window::Window()
 	//Glad
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
+		Debug::Log("Failed to initialize GLAD");
 		return;
 	}
 

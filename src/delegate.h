@@ -1,64 +1,110 @@
-#pragma once
-#ifndef DELEGATE_H
-#define DELEGATE_H
-
-#include <vector>
-#include <functional>
-
 /*
 //Weston McNamara 2020
 //Licensed Under MIT https://mit-license.org/
 //https://github.com/wmcnamara/delegate
- 
 //Delegate is a single header, lightweight and easy to use abstraction for storing functions and callbacks.
+//When you call AddHandler, a integer type containing the ID is returned. To call RemoveHandler, you must pass this integer.
+//If you know you might delete the handler you add, be sure to keep track of this number.
+//Uses std::map to represent ID/Function data.
+//Removing a handler of ID 0 simply returns, and does nothing.
 */
-namespace Events 
+
+#ifndef DELEGATE_INCLUDE
+#define DELEGATE_INCLUDE
+
+#include <functional>
+#include <map>
+
+template<typename ... T>
+class Delegate
 {
-	class Connection
+private:
+	typedef std::function<void(T...)> Func_T;
+public:
+	//Invokes each function added to this delegate. 
+	void Invoke(T... param)
 	{
-	public:
-		Connection(int index) : m_index(index) {}
-		int Index() const { return m_index; }
-	private:
-		const int m_index;
-	};
+		if (m_handlers.empty())
+			return;
 
-	template<typename T>
-	class Delegate
+		for (const auto& key : m_handlers)
+		{
+			key.second(param...); //Invoke the function
+		}
+	}
+
+	//Adds a single function to the delegate.
+	int AddHandler(Func_T func)
 	{
-	public:
-		//Invokes each function added to this delegate. 
-		//If no handlers exist, it returns false.
-		bool Invoke(T param)
+		static int nextID = 1;
+		m_handlers.insert(std::pair<int, Func_T>(nextID, func));
+
+		//Return the ID, and increment it.
+		return nextID++;
+	}
+
+	//Removes a single function from the delegate.
+	void RemoveHandler(int ID)
+	{
+		if (ID == 0)
+			return
+
+			m_handlers.erase(ID);
+	}
+
+	void RemoveAllHandlers()
+	{
+		m_handlers.clear();
+	}
+
+private:
+	std::map<int, Func_T> m_handlers;
+};
+
+//Template specialization for no parameter
+template<>
+class Delegate<void>
+{
+private:
+	typedef std::function<void()> Func_T;
+public:
+	//Invokes each function added to this delegate. 
+	void Invoke()
+	{
+		if (m_handlers.empty())
+			return;
+
+		for (const auto& key : m_handlers)
 		{
-			if (m_handlers.empty()) { return false; }
-
-			for (auto handler : m_handlers)
-			{
-				handler(param);
-			}
-			return true;
+			key.second(); //Invoke the function
 		}
+	}
 
-		//Adds a single function to the delegate.
-		Connection&& AddHandler(std::function<void(T param)> func)
-		{
-			//The new function was just added, size will be the position of it.
-			m_handlers.push_back(func);
+	//Adds a single function to the delegate.
+	int AddHandler(Func_T func)
+	{
+		static int nextID = 1;
+		m_handlers.insert(std::pair<int, Func_T>(nextID, func));
 
-			//Size does not take the index into account, so we subtract one to give the index.
-			return Connection(m_handlers.size() - 1);
-		}
+		//Return the ID, and increment it.
+		return nextID++;
+	}
 
-		//Removes a single function from the delegate
-		void RemoveHandler(Connection& conn) { m_handlers.erase(m_handlers.begin() + conn.Index()); }
-		void RemoveAllHandlers() { m_handlers.clear(); }
+	//Removes a single function from the delegate
+	void RemoveHandler(int ID)
+	{
+		if (ID == 0)
+			return;
 
-		//Invokes each handler added to this delegate.
-		void operator() (T param) { Invoke(param); }
+		m_handlers.erase(ID);
+	}
 
-	private:
-		std::vector<std::function<void(T param)>> m_handlers;
-	};
-}
-#endif
+	void RemoveAllHandlers()
+	{
+		m_handlers.clear();
+	}
+
+private:
+	std::map<int, Func_T> m_handlers;
+};
+#endif //DELEGATE_INCLUDE

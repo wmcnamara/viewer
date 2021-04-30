@@ -1,5 +1,4 @@
 # 3D Texture Viewer
-OpenGL Texture Viewer Created in C++ by Weston McNamara.
 
 # What is it?
 Viewer is a program that allows you to open and view textures on a 3D object with a clean and simple user interface.

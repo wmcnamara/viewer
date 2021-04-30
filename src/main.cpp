@@ -1,12 +1,7 @@
 #pragma warning( disable : 4005 )
 #pragma warning( disable : 4098 )
 #include "glad/glad.h"
-#include "stb_image.h"
 #include "GLFW/glfw3.h"
-
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 
 #include "Window.h"
 #include "Mesh.h"
@@ -17,16 +12,8 @@
 #include "MeshRenderer.h"
 #include "IO.h"
 
-#include <memory>
-#include <iostream>
-#include <string>
-
 #include <Windows.h>
 #include <shobjidl.h> 
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 #ifndef UNICODE
 #define UNICODE

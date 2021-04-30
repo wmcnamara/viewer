@@ -19,14 +19,20 @@
 #define UNICODE
 #endif 
 
+//Use a winmain application on release build, and console app on debug build
+#if defined (VIEWER_CONSOLE_APP)
+#define ENTRY_POINT int main(int argc, char** argv)
+#else
+#define ENTRY_POINT int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, INT nCmdShow)
+#endif 
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "Vertices.h"
 
 void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-//int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
-int main(int argc, char** argv)
+ENTRY_POINT
 {	
 	Window::Init(); //initialize
 
@@ -35,18 +41,25 @@ int main(int argc, char** argv)
 	Mesh cube(vertices, 90);
 	glm::mat4 model = glm::mat4(1.0f);
 
-	/////
+	////ENABLE WINDOWS "OPEN WITH" FUNCTIONALITY
 	//If there are two cmd line arguments, and it isnt empty load the second as texture. This allows "open with" functionality in windows.
 	//If you pass a texture to an EXE, it is the second cmd line argument. This allows loading it.
 	Texture texture("");
 
-	if (argc == 2) 
+#ifdef VIEWER_CONSOLE_APP
+	if (argc == 2)
 	{
 		if (argv[1] != "")
 			texture.Reload(argv[1]); //load command line argument
 	}
-	/////
+#else 
+	char textureToLoad[MAX_PATH];
+	if (lpCmdLine != "")
+		texture.Reload(lpCmdLine); //load command line argument	
+#endif
+	////////////
 
+	//Setup camera and gui
 	Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), Projection::Perspective);
 	GuiWindow sceneWin(Window::Instance().GetWidth(), Window::Instance().GetHeight(), 0, 0, "Scene Window");
 

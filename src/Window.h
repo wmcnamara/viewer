@@ -8,7 +8,6 @@
 #include <Windows.h>
 #include <string>
 #include "delegate.h"
-#include "Debug.h"
 
 class Window
 {
@@ -26,7 +25,10 @@ public:
 
 	GLFWwindow* GetWindow() { return m_window; }
 
-	static void Init() { Instance(); }
+	static void Init() 
+	{ 
+		Instance(); 
+	}
 
 	const int GetFrameCount() { return frameCount; }
 private:

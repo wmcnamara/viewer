@@ -1,5 +1,5 @@
 #include "GuiWindow.h"
-
+#pragma warning( disable : 4312 )
 GuiWindow::GuiWindow(int width, int height, int posx, int posy, const char* name) :
 	m_name(name)
 {

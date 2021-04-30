@@ -1,32 +1,5 @@
 #include "Camera.h"
 
-void Camera::Input()
-{
-	/*
-	const float cameraSpeed = 0.05f; // adjust accordingly
-	if (glfwGetKey(Window::Instance().GetWindow(), GLFW_KEY_W) == GLFW_PRESS)
-		position += cameraSpeed * front;
-	if (glfwGetKey(Window::Instance().GetWindow(), GLFW_KEY_S) == GLFW_PRESS)
-		position -= cameraSpeed * front;
-	if (glfwGetKey(Window::Instance().GetWindow(), GLFW_KEY_A) == GLFW_PRESS)
-		position -= glm::normalize(glm::cross(front, up)) * cameraSpeed;
-	if (glfwGetKey(Window::Instance().GetWindow(), GLFW_KEY_D) == GLFW_PRESS)
-		position += glm::normalize(glm::cross(front, up)) * cameraSpeed;
-	*/
-}
-
-void Camera::UpdatePositionData()
-{
-	//TODO
-	/*
-	cameraDirection = normalize(position - target);
-	right = normalize(cross(vec3(0.0f, 1.0f, 0.0f), cameraDirection));
-	up = cross(cameraDirection, right);
-
-	view = glm::lookAt(position, position + front, up);
-	*/
-}
-
 void Camera::UpdateProjectionData()
 {
 	//Get information about the viewport, to make sure the projection is configured correctly.
@@ -34,7 +7,7 @@ void Camera::UpdateProjectionData()
 	float viewportDat[4] = { 0, 0, 0, 0 };
 	glGetFloatv(GL_VIEWPORT, viewportDat);
 
-	if (m_projType == Perspective)
+	if (m_projType == Projection::Perspective)
 	{
 		projection = glm::perspective(
 			glm::radians(60.0f),
@@ -42,7 +15,7 @@ void Camera::UpdateProjectionData()
 			0.1f,
 			100.0f);
 	}
-	else if (m_projType == Orthographic)
+	else if (m_projType == Projection::Orthographic)
 	{
 		projection = glm::ortho(
 			glm::radians(60.0f),

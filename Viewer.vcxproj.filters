@@ -140,6 +140,12 @@
     <ClInclude Include="src\ShaderSrc.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\resource\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="build\assets\crate.jpg">
@@ -151,7 +157,7 @@
     <Image Include="build\assets\wall.jpg">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="assets\westmaclogo.ico">
+    <Image Include="lib\resource\icon.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -163,5 +169,10 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="lib\resource\Viewer.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

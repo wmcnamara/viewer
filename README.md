@@ -20,7 +20,6 @@ Viewer is a program for Windows that allows you to open and view textures on a 3
 ![showcase gif](showcase.gif)
 
 # More Info
- - 3D rendering techniques adapted from the [Learn OpenGL](https://learnopengl.com) website.
  - Support Windows's "Open File With" functionality.
  - Uses the Dear IMGUI library to render a fast and responsive GUI.
  - Uses a cool event system implementation that I wrote previously. It can be found [here.](https://github.com/wmcnamara/delegate)

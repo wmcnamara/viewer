@@ -38,10 +38,9 @@ public:
 		return ImGui::GetContentRegionAvail().x / ImGui::GetContentRegionAvail().y;
 	}
 
-	Events::Delegate<GetTextureFileArgs&> onNewTexLoad; //Called when user loads a new file.
-	Events::Delegate<GetFileArgs&> onNewShaderLoad; //Called when user loads new shaders.
+	inline static Delegate<GetTextureFileArgs> OnNewTexLoad; //Called when user loads a new file.
 private:
-	unsigned int FBO, RBO;
+	unsigned int FBO = 0, RBO = 0;
 	unsigned int renderTexture;
 	const char* m_name;
 };

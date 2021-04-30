@@ -23,6 +23,7 @@ void GuiWindow::BeginDraw()
 		ImGuiWindowFlags_NoTitleBar | 
 		ImGuiWindowFlags_NoResize);
 
+	//draw menu
 	if (ImGui::BeginMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -34,7 +35,7 @@ void GuiWindow::BeginDraw()
 					File::GetFile().c_str(),
 				};
 
-				onNewTexLoad(args);
+				OnNewTexLoad.Invoke(args);
 			}
 			ImGui::EndMenu();
 		}
@@ -45,7 +46,7 @@ void GuiWindow::BeginDraw()
 	}
 	ImGui::EndMenuBar();
 
-	//Rendering
+	//If the screen can be rendered to, render to texture
 	if (Renderable())
 	{
 		glViewport(0, 0, RenderSpace().x, RenderSpace().y);
@@ -79,7 +80,7 @@ void GuiWindow::BeginDraw()
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
 																									  
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			Debug::Log("ERROR::FRAMEBUFFER::NOT_COMPLETE");
+			std::cout << "Framebuffer not complete error\n";
 	}
 	else 
 	{

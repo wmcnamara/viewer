@@ -1,3 +1,5 @@
+#pragma warning( disable : 4005 )
+#pragma warning( disable : 4098 )
 #include "glad/glad.h"
 #include "stb_image.h"
 #include "GLFW/glfw3.h"
@@ -84,7 +86,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	Window::Init();
 
 	Shader shader("shaders/Standard.vert", "shaders/Standard.frag");
-	Texture texture("assets/error.jpg", false);
+	Texture texture("assets/error.jpg");
 	Mesh cube(vertices, 90);
 	glm::mat4 model = glm::mat4(1.0f);
 

@@ -44,6 +44,10 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)build</OutDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\int\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -86,7 +90,6 @@
     <ClCompile Include="src\IO.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\MeshRenderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -107,7 +110,6 @@
     <ClInclude Include="src\GuiWindow.h" />
     <ClInclude Include="src\IO.h" />
     <ClInclude Include="src\Mesh.h" />
-    <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\MeshRenderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\stb_image.h" />
@@ -121,6 +123,7 @@
     <Image Include="build\assets\wall.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="shaders\Standard.frag" />
     <None Include="shaders\Standard.vert" />
   </ItemGroup>

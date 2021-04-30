@@ -4,7 +4,6 @@
 #include <iostream>
 #include "Shader.h"
 #include "Window.h"
-#include "Debug.h"
 
 class Texture
 {

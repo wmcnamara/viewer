@@ -1,7 +1,17 @@
-# Viewer
-OpenGL Texture Viewer Created in C++
+# 3D Texture Viewer
+OpenGL Texture Viewer Created in C++ by Weston McNamara.
+
+# What is it?
+Viewer is a program that allows you to open and view textures on a 3D object with a clean and simple user interface.
+
+![showcase image](texview.png)
 
 # Using Viewer
-1. Run Viewer.exe
+1. Run Viewer.exe after building with Visual Studio
 2. Go to File -> Load Texture
 3. Select a texture you like.
+
+# More Info
+ - 3D rendering techniques adapted from the [Learn OpenGL](https://learnopengl.com) website.
+ - Uses the Dear IMGUI library to render a fast and responsive GUI.
+ - Uses a cool event system implementation that I wrote previously. It can be found [here.](https://github.com/wmcnamara/delegate)

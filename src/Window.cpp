@@ -63,7 +63,7 @@ Window::Window()
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	//Window //TODO
-	m_window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "WestMac Texture Viewer", NULL, NULL);
+	m_window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Texture Viewer - wmcnamara.com", NULL, NULL);
 	if (m_window == NULL)
 	{
 		std::cout << "Failed to create window\n";

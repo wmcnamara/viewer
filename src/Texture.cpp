@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(const char* path, bool genMipMaps)
+Texture::Texture(const char* path)
 {
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -18,9 +18,6 @@ Texture::Texture(const char* path, bool genMipMaps)
 	if (data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-		if (genMipMaps)
-			glGenerateMipmap(GL_TEXTURE_2D);
 
 		//Debug logging
 		std::cout << "TEXTURE: "<< path << " successfully loaded!" << "\n";

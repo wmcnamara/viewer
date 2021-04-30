@@ -8,7 +8,7 @@
 class Texture
 {
 public:
-	Texture(const char* path, bool genMipMaps);
+	Texture(const char* path);
 	void Reload(const char* path);
 	~Texture();
 

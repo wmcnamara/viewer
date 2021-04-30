@@ -30,7 +30,7 @@ Shader::Shader(const char * vertexPath, const char * fragmentPath)
 	}
 	catch (std::ifstream::failure e)
 	{
-		Debug::Log("Error: Shader Not Read");
+		std::cout << "Error: Shader Not Read\n";
 	}
 
 	const char* vShaderCode = vertexCode.c_str();
@@ -70,13 +70,11 @@ void Shader::ShaderLinkLog(unsigned int shaderProgram)
 	{
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 
-		std::stringstream output;
-		output << "Error. Shader linking failed.\n" << infoLog;
-		Debug::Log(output);
+		std::cout << "Error. Shader linking failed.\n" << infoLog << "\n";
 	}
 	else
 	{
-		Debug::Log("Shader Program Linked Successfully");
+		std::cout << "Shader Program Linked Successfully\n";
 	}
 }
 
@@ -92,12 +90,10 @@ void Shader::ShaderCompileLog(unsigned int vertexShader, unsigned int fragmentSh
 	{
 		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
 
-		std::stringstream output;
-		output << "Vertex Compilation Failed\n" << infoLog;
-		Debug::Log(output);
+		std::cout << "Vertex Compilation Failed\n" << infoLog << "\n";
 	}
 	else
-		Debug::Log("Vertex Shader Compiled Successfully");
+		std::cout << "Vertex Shader Compiled Successfully\n";
 
 	//Fragment Shader
 	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
@@ -105,12 +101,11 @@ void Shader::ShaderCompileLog(unsigned int vertexShader, unsigned int fragmentSh
 	if (!success)
 	{
 		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::stringstream output;
-		output << "Fragment Compilation Failed\n" << infoLog << std::endl;
-		Debug::Log(output);
+
+		std::cout << "Fragment Compilation Failed\n" << infoLog << std::endl;
 	}
-	else		
-		Debug::Log("Fragment Shader Compiled Successfully");
+	else
+		std::cout << "Fragment Shader Compiled Successfully\n";
 }
 
 void Shader::SetBool(const char* name, bool value) const

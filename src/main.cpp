@@ -47,15 +47,28 @@ ENTRY_POINT
 	Texture texture("");
 
 #ifdef VIEWER_CONSOLE_APP
+	for (int i = 0; i < argc; i++)
+	{
+		std::cout << argv[i] << "\n";
+	}
+
 	if (argc == 2)
 	{
 		if (argv[1] != "")
 			texture.Reload(argv[1]); //load command line argument
 	}
 #else 
-	char textureToLoad[MAX_PATH];
-	if (lpCmdLine != "")
-		texture.Reload(lpCmdLine); //load command line argument	
+	//For some reason windows adds "" to the end of the command line argument when you use the "Open With" dialog.
+	//This removes the "", so it can be loaded correctly.
+	std::string filePath = lpCmdLine;
+	filePath.erase(remove(filePath.begin(), filePath.end(), '"'), filePath.end()); //remove " from string
+
+	//Log info to file
+	std::ofstream log("output.log");
+	log << "CMD LINE: " << filePath;
+	log.close();
+
+	texture.Reload(filePath.c_str()); //load command line argument	
 #endif
 	////////////
 

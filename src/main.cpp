@@ -13,7 +13,6 @@
 #include "GuiWindow.h"
 #include "Camera.h"
 #include "MeshRenderer.h"
-#include "ConfigReader.h"
 #include "IO.h"
 
 #include <memory>
@@ -80,27 +79,16 @@ float vertices[] = {
 
 void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-Camera* camera;
-Shader* shader;
-Texture* texture;
-Mesh* cube;
-MeshRenderer* renderer;
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-
-
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
 	Window::Init();
-	shader = new Shader("shaders/Standard.vert", "shaders/Standard.frag");
-	texture = new Texture("assets/error.jpg", false);
-	cube = new Mesh(vertices, NULL, 180, 0, false);
 
-	camera = new Camera(
-		cameraPos,
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		Perspective);
+	Shader shader("shaders/Standard.vert", "shaders/Standard.frag");
+	Texture texture("assets/error.jpg", false);
+	Mesh cube(vertices, 90);
+	glm::mat4 model = glm::mat4(1.0f);
 
-	renderer = new MeshRenderer(cube, texture, shader, camera);
+	Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), Projection::Perspective);
 
 	GuiWindow sceneWin(Window::Instance().GetWidth(), Window::Instance().GetHeight(), 0, 0, "Scene Window");
 
@@ -108,7 +96,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 	glfwSetKeyCallback(Window::Instance().GetWindow(), InputCallback);
 
 	//Subscribe to events
-	sceneWin.onNewTexLoad.AddHandler([](GetTextureFileArgs args) { texture->Reload(args.texturePath.c_str()); });
+	GuiWindow::OnNewTexLoad.AddHandler([&](GetTextureFileArgs args) { texture.Reload(args.texturePath.c_str()); });
 
 	while (!glfwWindowShouldClose(Window::Instance().GetWindow()))
 	{
@@ -121,32 +109,34 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 		ImGui::Text(output.c_str());
 
 		//Update Shaders
-		shader->Update();
+		shader.Update();
 
 		//Update Model Matrix
-		renderer->model = glm::mat4(1.0f);
-		renderer->model = glm::rotate(
-			renderer->model,
+		model = glm::mat4(1.0f);
+		model = glm::rotate(
+			model,
 			(float)glfwGetTime() * glm::radians(50.0f),
 			glm::vec3(0.5f, 1.0f, 0.0f));
 
 		//Update Perspective data, and render.
-		camera->Run();
-		shader->SetMatrix4("view", camera->view);
-		renderer->Render();
+		camera.Run();
+		shader.SetMatrix4("view", camera.view);
 
+		shader.SetMatrix4("model", model);
+		shader.SetMatrix4("projection", camera.GetProjection());
+		glBindTexture(GL_TEXTURE_2D, texture.Data());
+		glBindVertexArray(cube.GetVAO());
+		glUseProgram(shader.ID);
+		glDrawArrays(GL_TRIANGLES, 0, cube.VertexCount());
 		sceneWin.EndDraw();
 		Window::Instance().AfterRender();
 	}
 
-	delete shader;
 	return 0;
-}	
+}
 
 void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-
-	camera->Input();
 }

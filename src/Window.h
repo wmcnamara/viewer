@@ -8,6 +8,8 @@
 #include <Windows.h>
 #include <string>
 #include "delegate.h"
+#include <ostream>
+#include <fstream>
 
 class Window
 {

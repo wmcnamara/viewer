@@ -49,8 +49,6 @@ std::string File::GetFile()
 						//Setup logging
 						std::ofstream log;
 						log.open("output.log");
-						if (log.is_open())
-							log << "Size of file path: " << *pszFilePath << std::endl;
 
 						//Convert the string:
 

@@ -34,64 +34,33 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
-float vertices[] = {
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-};
+#include "Vertices.h"
 
 void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
-{
-	Window::Init();
+//int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+int main(int argc, char** argv)
+{	
+	Window::Init(); //initialize
 
-	Shader shader("shaders/Standard.vert", "shaders/Standard.frag");
-	Texture texture("assets/error.jpg");
+	//Create data for a cube
+	Shader cubeShader;
 	Mesh cube(vertices, 90);
 	glm::mat4 model = glm::mat4(1.0f);
 
-	Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), Projection::Perspective);
+	/////
+	//If there are two cmd line arguments, and it isnt empty load the second as texture. This allows "open with" functionality in windows.
+	//If you pass a texture to an EXE, it is the second cmd line argument. This allows loading it.
+	Texture texture("");
 
+	if (argc == 2) 
+	{
+		if (argv[1] != "")
+			texture.Reload(argv[1]); //load command line argument
+	}
+	/////
+
+	Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), Projection::Perspective);
 	GuiWindow sceneWin(Window::Instance().GetWidth(), Window::Instance().GetHeight(), 0, 0, "Scene Window");
 
 	//Input
@@ -110,9 +79,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 		output += std::to_string(Window::Instance().GetFrameCount());
 		ImGui::Text(output.c_str());
 
-		//Update Shaders
-		shader.Update();
-
 		//Update Model Matrix
 		model = glm::mat4(1.0f);
 		model = glm::rotate(
@@ -122,13 +88,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
 		//Update Perspective data, and render.
 		camera.Run();
-		shader.SetMatrix4("view", camera.view);
 
-		shader.SetMatrix4("model", model);
-		shader.SetMatrix4("projection", camera.GetProjection());
+		cubeShader.SetMatrix4("view", camera.view);
+		cubeShader.SetMatrix4("model", model);
+		cubeShader.SetMatrix4("projection", camera.GetProjection());
+
 		glBindTexture(GL_TEXTURE_2D, texture.Data());
 		glBindVertexArray(cube.GetVAO());
-		glUseProgram(shader.ID);
+		glUseProgram(cubeShader.ID);
 		glDrawArrays(GL_TRIANGLES, 0, cube.VertexCount());
 		sceneWin.EndDraw();
 		Window::Instance().AfterRender();

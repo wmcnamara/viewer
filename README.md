@@ -3,7 +3,7 @@
 # What is it?
 Viewer is a program for Windows that allows you to open and view textures on a 3D object with a clean and simple user interface.
 
-![showcase image](texview.png)
+![showcase gif](showcase.gif)
 
 # Using Viewer
 ## Visual Studio
@@ -16,8 +16,6 @@ Viewer is a program for Windows that allows you to open and view textures on a 3
 1. Ensure you have the [latest Visual C++ redistributable downloaded.](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0)
 2. Run the Viewer.exe file.
 3. If the application fails to load or throws an error, repeat step 1. If you have already done that, [open an issue.](https://github.com/wmcnamara/viewer/issues/new)
-
-![showcase gif](showcase.gif)
 
 # More Info
  - Support Windows's "Open File With" functionality.

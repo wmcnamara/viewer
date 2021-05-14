@@ -46,10 +46,6 @@ std::string File::GetFile()
 						//Convert from wide string to const char*.
 						//wcslen gets wide string length
 
-						//Setup logging
-						std::ofstream log;
-						log.open("output.log");
-
 						//Convert the string:
 
 						//Create a buffer to hold it. Add one for null term char.
@@ -62,8 +58,6 @@ std::string File::GetFile()
 
 						//Finalize resources
 						delete buf;
-						log << filePath.c_str() << std::endl;
-						log.close();
 						CoTaskMemFree(pszFilePath);
 					}
 					pItem->Release();

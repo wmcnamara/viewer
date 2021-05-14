@@ -64,10 +64,11 @@ ENTRY_POINT
 	filePath.erase(remove(filePath.begin(), filePath.end(), '"'), filePath.end()); //remove " from string
 
 	//Log info to file
+#ifdef VIEWER_CONSOLE_APP
 	std::ofstream log("output.log");
 	log << "CMD LINE: " << filePath;
 	log.close();
-
+#endif
 	texture.Reload(filePath.c_str()); //load command line argument	
 #endif
 	////////////
@@ -81,6 +82,8 @@ ENTRY_POINT
 
 	//Subscribe to events
 	GuiWindow::OnNewTexLoad.AddHandler([&](GetTextureFileArgs args) { texture.Reload(args.texturePath.c_str()); });
+
+	ImGui::GetIO().IniFilename = nullptr; //disable ini writing
 
 	while (!glfwWindowShouldClose(Window::Instance().GetWindow()))
 	{
@@ -110,6 +113,7 @@ ENTRY_POINT
 		glBindVertexArray(cube.GetVAO());
 		glUseProgram(cubeShader.ID);
 		glDrawArrays(GL_TRIANGLES, 0, cube.VertexCount());
+
 		sceneWin.EndDraw();
 		Window::Instance().AfterRender();
 	}

@@ -55,9 +55,10 @@ Window::Window()
 {
 #ifdef VIEWER_CONSOLE_APP
 	std::cout << "Viewer Debug Started\n";
-#endif 
 	std::ofstream log;
 	log.open("output.log");
+#endif 
+
 
 	//Glfw
 	glfwInit();
@@ -70,7 +71,9 @@ Window::Window()
 	m_window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Texture Viewer - wmcnamara.com", NULL, NULL);
 	if (m_window == NULL)
 	{
+#ifdef VIEWER_CONSOLE_APP
 		log << "Failed to create window\n";
+#endif
 		glfwTerminate();
 		return;
 	}
@@ -79,7 +82,9 @@ Window::Window()
 	//Glad
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
+#ifdef VIEWER_CONSOLE_APP
 		log << "Failed to initialize GLAD\n";
+#endif
 		return;
 	}
 
@@ -98,5 +103,7 @@ Window::Window()
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 
+#ifdef VIEWER_CONSOLE_APP
 	log.close();
+#endif
 }

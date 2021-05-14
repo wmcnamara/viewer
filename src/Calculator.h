@@ -4,6 +4,11 @@
 #include "imgui.h"
 #include "Window.h"
 
+/// <summary>
+/// This is a legacy test file from the first version of Viewer.
+/// 
+/// You can ignore this.
+/// </summary>
 class Calculator 
 {
 public:

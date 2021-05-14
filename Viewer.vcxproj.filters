@@ -140,9 +140,6 @@
     <ClInclude Include="src\ShaderSrc.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lib\resource\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>

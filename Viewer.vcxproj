@@ -167,7 +167,6 @@
     <ClInclude Include="lib\imgui\imstb_textedit.h" />
     <ClInclude Include="lib\imgui\imstb_truetype.h" />
     <ClInclude Include="lib\resource\resource.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="src\Calculator.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\delegate.h" />

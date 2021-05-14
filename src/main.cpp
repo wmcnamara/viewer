@@ -31,6 +31,7 @@
 #include "Vertices.h"
 
 void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void DropCallback(GLFWwindow* window, int size, const char** filepaths);
 
 ENTRY_POINT
 {	
@@ -79,6 +80,7 @@ ENTRY_POINT
 
 	//Input
 	glfwSetKeyCallback(Window::Instance().GetWindow(), InputCallback);
+	glfwSetDropCallback(Window::Instance().GetWindow(), DropCallback);
 
 	//Subscribe to events
 	GuiWindow::OnNewTexLoad.AddHandler([&](GetTextureFileArgs args) { texture.Reload(args.texturePath.c_str()); });
@@ -125,4 +127,12 @@ void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mo
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+}
+
+void DropCallback(GLFWwindow* window, int size, const char** filepaths)
+{
+	GetTextureFileArgs args;
+	args.texturePath = filepaths[0];
+
+	GuiWindow::OnNewTexLoad.Invoke(args);
 }

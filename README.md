@@ -1,7 +1,7 @@
 # 3D Texture Viewer
 
 # What is it?
-Viewer is a program for Windows that allows you to open and view textures on a 3D object with a clean and simple user interface.
+Viewer is a program for Windows that allows you to open and view textures on a 3D object with a clean and simple user interface. It supports file pickers, drag and drop file loading, and Windows's "Open File With" functionality.
 
 ![showcase gif](showcase.gif)
 
